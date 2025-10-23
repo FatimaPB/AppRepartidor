@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   http: ^1.2.0
   flutter_secure_storage: ^8.1.0
+  skeletonizer: ^2.1.0+1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
