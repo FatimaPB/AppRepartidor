@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
-import 'home_screen.dart';
+import 'main_navigation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +14,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final AuthService _authService = AuthService();
   bool _loading = false;
+
+  //Variable para mostrar u ocultar contraseña
+  bool _obscurePassword = true;
 
   Future<void> _login() async {
     final correo = _emailController.text.trim();
@@ -35,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (!mounted) return;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+          MaterialPageRoute(builder: (_) => const MainNavigation()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -97,17 +100,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const SizedBox(height: 20),
+
+                // Campo de contraseña con ojito
                 TextField(
                   controller: _passwordController,
+                  obscureText: _obscurePassword,
                   decoration: InputDecoration(
                     labelText: "Contraseña",
                     prefixIcon: const Icon(Icons.lock, color: Colors.grey),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    //  Icono para mostrar/ocultar
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
+                    ),
                   ),
-                  obscureText: true,
                 ),
+
                 const SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
@@ -137,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-     ),
+      ),
     );
   }
 }

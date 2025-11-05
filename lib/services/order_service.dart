@@ -3,11 +3,17 @@ import 'package:http/http.dart' as http;
 import '../models/order_model.dart';
 
 class OrderService {
-  final String baseUrl = 'http://192.168.1.80:3000/api';
+  final String baseUrl = 'https://api-libreria.vercel.app/api';
+
+  // ✅ Nueva propiedad para inyección de dependencias
+  http.Client httpClient;
+
+  // ✅ Constructor con valor por defecto para producción
+  OrderService({http.Client? client}) : httpClient = client ?? http.Client();
 
   Future<List<Order>> fetchOrders() async {
     try {
-      final response = await http.get(
+      final response = await httpClient.get(
         Uri.parse('$baseUrl/envios/pendientes'),
         headers: {
           "Content-Type": "application/json",
@@ -28,11 +34,8 @@ class OrderService {
     }
   }
 
-
-
- // Obtener detalle de un pedido
   Future<OrderDetail> fetchOrderDetail(int orderId) async {
-    final response = await http.get(
+    final response = await httpClient.get(
       Uri.parse('$baseUrl/envios/$orderId'),
       headers: {"Content-Type": "application/json", "Accept": "application/json"},
     );

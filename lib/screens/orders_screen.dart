@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:repartidor/screens/Home_screen.dart';
 import '../models/order_model.dart';
 import '../services/order_service.dart';
+import 'orderDetailScreen.dart';
 import '../widgets/app_header.dart';
 import '../widgets/skeleton.dart';
 
@@ -249,7 +249,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      HomeScreen(),
+                                      OrderDetailScreen(order: order),
                                 ),
                               );
                             },
@@ -371,7 +371,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  HomeScreen(),
+                                                  OrderDetailScreen(order: order),
                                             ),
                                           );
                                         },

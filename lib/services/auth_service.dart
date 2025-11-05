@@ -74,7 +74,7 @@ class AuthService {
       return null;
     }
 
-    final url = Uri.parse('http://192.168.1.80:3000/api/perfil-movil');
+    final url = Uri.parse('https://api-libreria.vercel.app/api/perfil-movil');
     print('➡️ Enviando token en header: $token');
 
     final response = await _client.get( // ⚡ Cambiado de http.get a _client.get
