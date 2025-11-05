@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'orders_screen.dart';
-//import 'profile_screen.dart';
+import 'profile_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _MainNavigationState extends State<MainNavigation> {
   final List<Widget> pages = const [
     HomeScreen(),
     OrdersScreen(),
-   // ProfileScreen(),
+    ProfileScreen(),
   ];
 
   @override
