@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Pruebas Flutter
+name: Pruebas y Build Flutter
 
 on:
   push:
@@ -14,6 +14,9 @@ on:
       - main
 
 jobs:
+  # -------------------------------
+  # JOB 1: TESTS
+  # -------------------------------
   test:
     runs-on: ubuntu-latest
 
@@ -26,7 +29,7 @@ jobs:
       - name: Instalar dependencias
         run: sudo apt-get update && sudo apt-get install -y git curl unzip xz-utils zip libglu1-mesa libopengl0
 
-      # Paso 3: Instalar Flutter 3.35 (estable)
+      # Paso 3: Instalar Flutter 3.35
       - name: Instalar Flutter
         run: |
           git clone https://github.com/flutter/flutter.git --branch 3.35.7 --depth 1
@@ -50,3 +53,45 @@ jobs:
         with:
           name: reporte-cobertura
           path: coverage/
+
+  # -------------------------------
+  # JOB 2: BUILD APK
+  # -------------------------------
+  build:
+    needs: test        # solo se ejecuta si el job de tests pasa
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Clonar repositorio
+      - name: Clonar repositorio
+        uses: actions/checkout@v5
+
+      # Paso 2: Instalar dependencias del sistema
+      - name: Instalar dependencias
+        run: sudo apt-get update && sudo apt-get install -y git curl unzip xz-utils zip libglu1-mesa libopengl0
+
+      # Paso 3: Instalar Flutter 3.35
+      - name: Instalar Flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git --branch 3.35.7 --depth 1
+          echo "$PWD/flutter/bin" >> $GITHUB_PATH
+
+      # Paso 4: Verificar versión de Flutter y Dart
+      - name: Verificar Flutter/Dart
+        run: flutter --version
+
+      # Paso 5: Instalar dependencias del proyecto
+      - name: Flutter pub get
+        run: flutter pub get
+
+      # Paso 6: Build APK release
+      - name: Build APK
+        run: flutter build apk --release
+
+      # Paso 7: Subir APK como artefacto
+      - name: Subir APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 5
