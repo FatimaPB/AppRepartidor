@@ -5,13 +5,9 @@ name: Pruebas Flutter
 
 on:
   push:
-    branches:
-      - develop
-      - main
+    branches: [develop, main]
   pull_request:
-    branches:
-      - develop
-      - main
+    branches: [develop, main]
 
 jobs:
   test:
@@ -21,13 +17,15 @@ jobs:
       - name: Clonar repositorio
         uses: actions/checkout@v5
 
-      - name: Verificar Flutter y Dart
-        run: flutter --version
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.12' # versión estable disponible
 
       - name: Instalar dependencias
         run: flutter pub get
 
-      - name: Ejecutar tests
+      - name: Ejecutar tests con cobertura
         run: flutter test --coverage
 
       - name: Subir reporte de cobertura
