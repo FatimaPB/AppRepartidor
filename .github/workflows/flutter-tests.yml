@@ -18,25 +18,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Clonar el repositorio
       - name: Clonar repositorio
         uses: actions/checkout@v5
 
-      # Paso 2: Verificar versión de Flutter/Dart que ya viene en el runner
       - name: Verificar Flutter y Dart
         run: flutter --version
 
-      # Paso 3: Instalar dependencias
       - name: Instalar dependencias
         run: flutter pub get
 
-      # Paso 4: Ejecutar tests con cobertura
-      - name: Ejecutar pruebas
+      - name: Ejecutar tests
         run: flutter test --coverage
 
-      # Paso 5: Subir reporte de cobertura como artefacto
       - name: Subir reporte de cobertura
         uses: actions/upload-artifact@v4
         with:
           name: reporte-cobertura
           path: coverage/
+
