@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/welcome_screen.dart'; // importa la nueva pantalla
+import 'screens/welcome_screen.dart';
+import 'screens/main_navigation.dart'; // importa la pantalla de navegación principal
 
 void main() {
   runApp(const MainApp());
@@ -14,9 +15,15 @@ class MainApp extends StatelessWidget {
       title: "App Repartidor",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF660000), // color principal
+        ),
+        useMaterial3: true,
       ),
-      home: const WelcomeScreen(), // arranca en la pantalla de bienvenida
+      home: const WelcomeScreen(),
+      routes: {
+        '/main': (context) => const MainNavigation(), // 🔥 ruta hacia la navegación moderna
+      },
     );
   }
 }
