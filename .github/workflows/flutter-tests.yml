@@ -22,11 +22,11 @@ jobs:
       - name: Clonar repositorio
         uses: actions/checkout@v5
 
-      # Paso 2: Configurar Flutter
+      # Paso 2: Configurar Flutter (versión estable compatible)
       - name: Configurar Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.4-0.0.pre.2'
+          flutter-version: '3.13.0'
 
       # Paso 3: Verificar versión de Flutter y Dart
       - name: Verificar versión de Flutter/Dart
@@ -40,7 +40,7 @@ jobs:
       - name: Ejecutar pruebas
         run: flutter test --coverage
 
-      # Paso 6: Subir reporte de cobertura
+      # Paso 6: Subir reporte de cobertura como artefacto
       - name: Subir reporte de cobertura
         uses: actions/upload-artifact@v4
         with:
