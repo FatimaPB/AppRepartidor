@@ -26,21 +26,23 @@ jobs:
       - name: Configurar Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.3'  # La versión que tienes en tu proyecto
+          flutter-version: '3.13.3'
 
+      # Paso 3: Verificar versión de Flutter y Dart
+      - name: Verificar versión de Flutter/Dart
+        run: flutter --version
 
-      # Paso 3: Instalar dependencias
+      # Paso 4: Instalar dependencias
       - name: Instalar dependencias
         run: flutter pub get
 
-      # Paso 4: Ejecutar tests con cobertura
+      # Paso 5: Ejecutar tests con cobertura
       - name: Ejecutar pruebas
         run: flutter test --coverage
 
-      # Paso 5: Subir reporte de cobertura
+      # Paso 6: Subir reporte de cobertura
       - name: Subir reporte de cobertura
         uses: actions/upload-artifact@v4
         with:
           name: reporte-cobertura
           path: coverage/
-
