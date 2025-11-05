@@ -24,9 +24,9 @@ jobs:
 
       # Paso 2: Configurar Flutter
       - name: Configurar Flutter
-        uses: subosito/flutter-action@v2
+        uses: actions/setup-flutter@v2
         with:
-          flutter-version: 'stable'
+          flutter-version: '3.13.3'  # Pon aquí la versión estable que quieras
 
       # Paso 3: Instalar dependencias
       - name: Instalar dependencias
@@ -42,3 +42,4 @@ jobs:
         with:
           name: reporte-cobertura
           path: coverage/
+
