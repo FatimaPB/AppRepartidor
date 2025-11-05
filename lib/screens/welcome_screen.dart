@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
 
 class WelcomeScreen extends StatefulWidget {
@@ -9,7 +10,8 @@ class WelcomeScreen extends StatefulWidget {
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin {
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
   int _currentSlide = 0;
   late PageController _pageController;
   late AnimationController _fadeController;
@@ -40,12 +42,28 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
+    // 👇 Ajuste visual del sistema (barra superior e inferior)
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.white, // mismo tono del fondo superior
+        statusBarIconBrightness:
+            Brightness.dark, // iconos oscuros si fondo claro
+        systemNavigationBarColor: Color(
+          0xFFFAF8F6,
+        ), // parte inferior igual que el fondo
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
+
     _pageController = PageController();
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_fadeController);
+    _fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_fadeController);
     _fadeController.forward();
 
     // Auto-slide cada 4 segundos
@@ -76,16 +94,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFFF5F5F5),
-              Color(0xFFFFFFFF),
-              Color(0xFFFAF8F6),
-            ],
+            colors: [Color(0xFFF5F5F5), Color(0xFFFFFFFF), Color(0xFFFAF8F6)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -94,27 +109,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
           children: [
             // Elementos decorativos de fondo suaves
             _buildBackgroundEffects(),
-            
+
             // Contenido principal
             SafeArea(
               child: Column(
                 children: [
                   // Logo y nombre superior
                   _buildHeader(),
-                  
+
                   // Carrusel de slides
-                  Expanded(
-                    child: _buildCarousel(),
-                  ),
-                  
+                  Expanded(child: _buildCarousel()),
+
                   // Indicadores de página
                   _buildPageIndicators(),
-                  
+
                   const SizedBox(height: 40),
-                  
+
                   // Botones de acción
                   _buildActionButtons(context),
-                  
+
                   const SizedBox(height: 30),
                 ],
               ),
@@ -270,14 +283,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
               ),
             ],
           ),
-          child: Icon(
-            slide.icon,
-            size: 55,
-            color: Colors.white,
-          ),
+          child: Icon(slide.icon, size: 55, color: Colors.white),
         ),
         const SizedBox(height: 40),
-        
+
         // Título
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -294,7 +303,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
           ),
         ),
         const SizedBox(height: 16),
-        
+
         // Descripción
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -381,16 +390,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
             ),
           ),
           const SizedBox(height: 20),
-          
+
           // Texto decorativo
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(
-                Icons.favorite,
-                size: 16,
-                color: Color(0xFFA38350),
-              ),
+              Icon(Icons.favorite, size: 16, color: Color(0xFFA38350)),
               SizedBox(width: 8),
               Text(
                 "Servir con amor y alegría",
