@@ -22,25 +22,19 @@ jobs:
       - name: Clonar repositorio
         uses: actions/checkout@v5
 
-      # Paso 2: Configurar Flutter (versión estable compatible)
-      - name: Configurar Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.13.10'
-
-      # Paso 3: Verificar versión de Flutter y Dart
-      - name: Verificar versión de Flutter/Dart
+      # Paso 2: Verificar versión de Flutter/Dart que ya viene en el runner
+      - name: Verificar Flutter y Dart
         run: flutter --version
 
-      # Paso 4: Instalar dependencias
+      # Paso 3: Instalar dependencias
       - name: Instalar dependencias
         run: flutter pub get
 
-      # Paso 5: Ejecutar tests con cobertura
+      # Paso 4: Ejecutar tests con cobertura
       - name: Ejecutar pruebas
         run: flutter test --coverage
 
-      # Paso 6: Subir reporte de cobertura como artefacto
+      # Paso 5: Subir reporte de cobertura como artefacto
       - name: Subir reporte de cobertura
         uses: actions/upload-artifact@v4
         with:
