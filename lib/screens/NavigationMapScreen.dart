@@ -312,7 +312,7 @@ class _NavigationMapScreenState extends State<NavigationMapScreen> {
             ],
           ),
         ),
-      ],
-    );
-  }
+     ],
+);
+}
 }
