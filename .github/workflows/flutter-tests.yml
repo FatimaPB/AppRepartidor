@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Flutter Tests
+name: Pruebas Flutter
 
 on:
   push:
@@ -16,23 +16,29 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      # Paso 1: Clonar el repositorio
+      - name: Clonar repositorio
         uses: actions/checkout@v5
 
-      - name: Setup Flutter
-        uses: actions/setup-flutter@v2
+      # Paso 2: Configurar Flutter
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: stable 
+          flutter-version: 'stable'
 
-      - name: Install dependencies
+      # Paso 3: Instalar dependencias
+      - name: Instalar dependencias
         run: flutter pub get
 
-      - name: Run tests
+      # Paso 4: Ejecutar tests con cobertura
+      - name: Ejecutar pruebas
         run: flutter test --coverage
 
-      - name: Upload coverage report
+      # Paso 5: Subir reporte de cobertura
+      - name: Subir reporte de cobertura
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
+          name: reporte-cobertura
           path: coverage/
